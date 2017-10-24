@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { reducer as formReducer } from 'redux-form';
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 
