@@ -19,10 +19,17 @@ class PostsNew extends Component {
     )
   }
 
-  render() {
+  onSubmit(values) {
+    console.log(values);
+  }
 
+  render() {
+    const { handleSubmit } = this.props; // handleSubmit is a property passed to our component on behalf of redux-form
+
+    // on submit, it will call handleSubmit. the redux-form side will check it all is good. then, it will call the callback of onSubmit and pass the values
+    
     return (
-      <form>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label='Title'
           name='title'
@@ -40,7 +47,7 @@ class PostsNew extends Component {
           name='content'
           component={this.renderField}
           />
-
+        <button type='submit' className='btn btn-primary'>Submit</button>
       </form>
     );
   }
