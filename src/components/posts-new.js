@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createPosts } from '../actions';
 
 class PostsNew extends Component {
 
@@ -27,7 +30,9 @@ class PostsNew extends Component {
   }
 
   onSubmit(values) {
-    console.log(values);
+    this.props.createPosts(values, () => {
+      this.props.history.push('/'); //navigate back to route route of app; this is the callback
+    });
   }
 
   render() {
@@ -55,6 +60,7 @@ class PostsNew extends Component {
           component={this.renderField}
           />
         <button type='submit' className='btn btn-primary'>Submit</button>
+        <Link to='/' className='btn btn-danger'>Cancel</Link>
       </form>
     );
   }
@@ -81,4 +87,6 @@ function validate(values) {
 export default reduxForm({
   validate,
   form: 'PostsNewForm' // name of the form - helpful if you want to have multiple forms on a page
-})(PostsNew);
+})(
+  connect(null, {createPosts})(PostsNew)
+);
