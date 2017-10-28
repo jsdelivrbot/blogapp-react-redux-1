@@ -6,15 +6,22 @@ class PostsNew extends Component {
   renderField(field) {
     //field obj contains event handlers and props
     // allow this object to be communicated as props to the input tag
+
+    const { meta: { touched, error } } = field; // destructuring - pull off the touched and error properties from the meta object; helps access properties from nested objects
+
+    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+
     return (
-      <div className='form-group'>
+      <div className={className}>
         <label>{field.label}</label>
         <input
           className='form-control'
           type='text'
           {...field.input}
           />
-        {field.meta.error}
+        <div className='text-help'>
+          {touched ? error : ''}
+        </div>
       </div>
     )
   }
@@ -27,7 +34,7 @@ class PostsNew extends Component {
     const { handleSubmit } = this.props; // handleSubmit is a property passed to our component on behalf of redux-form
 
     // on submit, it will call handleSubmit. the redux-form side will check it all is good. then, it will call the callback of onSubmit and pass the values
-    
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
@@ -38,7 +45,7 @@ class PostsNew extends Component {
 
       <Field
         label='Categories'
-        name='Categories'
+        name='categories'
         component={this.renderField}
         />
 
