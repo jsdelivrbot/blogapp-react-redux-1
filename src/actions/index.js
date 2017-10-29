@@ -5,7 +5,7 @@ export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST = 'FETCH_POST';
 export const CREATE_POSTS = 'CREATE_POSTS';
 
-const ROOT_URL = 'https://reduxblog.herokuapp.com/api/';
+const ROOT_URL = 'https://reduxblog.herokuapp.com/api';
 const API_KEY = '?key=paperclip12345';
 
 export function fetchPosts() {
@@ -29,6 +29,6 @@ export function fetchPost(id) {
   const request = axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`)
   return {
     type: FETCH_POST,
-    paylod: request,
+    payload: request,
   }
 }

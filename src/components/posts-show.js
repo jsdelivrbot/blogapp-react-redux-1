@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchPost } from '../actions';
 
 class PostsShow extends Component {
   componentDidMount() {
       // this.props.match.params.id;  // provided by react router
-      const {id} = this.props.match.params;
+      const { id } = this.props.match.params;
       this.props.fetchPost(id);
   }
 
-  // helperFunction() {
-  //   this.props.posts[this.props.match.params.id];
-  // }
-
   render() {
+    const {post} = this.props;
+
+    if(!post) {
+        return <div>Loading...</div>;
+    }
 
     return (
-      <div>Posts Show!</div>
+      <div>
+        <Link to='/' className='btn btn-primary'>Back to Index</Link>
+        <h3>{post.title}</h3>
+        <h6>Categories: {post.categories}</h6>
+        <p>{post.content}</p>
+      </div>
     )
   }
 
@@ -24,6 +31,7 @@ class PostsShow extends Component {
 
 // first argument is state (we only want the posts property), second argument is the props object this.props === ownProps; return single posts we want
 function mapStateToProps({posts}, ownProps) {
-  return { posts: posts[ownProps.match.params.id]};
+  return { post: posts[ownProps.match.params.id]};
 }
+
 export default connect(mapStateToProps, {fetchPost})(PostsShow);
