@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const FETCH_POST = 'FETCH_POST';
 export const CREATE_POSTS = 'CREATE_POSTS';
+export const DELETE_POST = 'DELETE_POST';
 
 const ROOT_URL = 'https://reduxblog.herokuapp.com/api';
 const API_KEY = '?key=paperclip12345';
@@ -30,5 +31,14 @@ export function fetchPost(id) {
   return {
     type: FETCH_POST,
     payload: request,
+  }
+}
+
+export function deletePost(id, callback) {
+  const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+  .then(() => callback());
+  return {
+    type: DELETE_POST,
+    payload: id,
   }
 }
